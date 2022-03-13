@@ -9,23 +9,28 @@ def procesos(env, espera_inicio, nombre, cantidad_ram, cantidad_insutrcciones, i
     yield memoria.get(cantidad_ram)
 
     while cantidad_insutrcciones > 0:
-        print(nombre + " proceso en cola READY. Tiempo: " + env.now + " Cantidad de instrucciones pendientes: " + cantidad_insutrcciones)
+        print("%s proceso en cola [NEW] en %d cantidad de ram requerida %d, cantidad de ram disponible %d" % (nombre, env.now, cantidad_ram, memoria.level))
         with cpu.request() as req:
             yield cpu
 
             cantidad_insutrcciones -= instrucciones_ciclo
             yield env.timeout(operaciones_ciclo) #ciclos cada operacion
 
-            print(nombre + " proceso ne estado RUNNING ejecutado en tiempo: " + env.now + " usando " + cantidad_ram + " de RAM. Instrucciones pendientes: " + cantidad_insutrcciones + " RAM disponible: " + memoria.level)
+            #print(nombre + " proceso ne estado RUNNING ejecutado en tiempo: " + env.now + " usando " + cantidad_ram + " de RAM. Instrucciones pendientes: " + cantidad_insutrcciones + " RAM disponible: " + memoria.level)
+            #print("%s proceso en cola ready, tiempo --> %d, cantidad de instrucciones pendientes %d" % (nombre, env.now, cantidad_instrucciones))
+            print("%s proces en cola [READY] en tiempo %d. Cantidad de instrucciones pendientes %d" % (nombre, env.now, cantidad_insutrcciones))
+
 
     yield memoria.put(cantidad_ram)
 
     global tiempo_total
     tiempo_total += env.now - tiempo_espera
 
-    print(nombre + " proceso terminado en tiempo: " + tiempo_total)
-    print("Cantidad de RAM devuelta: " + cantidad_ram)
-    print("Cantidad de memoria disponible: " + memoria.level) 
+    #print(nombre + " proceso terminado en tiempo: " + tiempo_total)
+    #print("Cantidad de RAM devuelta: " + cantidad_ram)
+    #print("Cantidad de memoria disponible: " + memoria.level) 
+
+    print("%s proceso termiando en tiempo $d. Cantidad de RAM devuelta: %d. Cantidad de memoria disponible %d" & (nombre, tiempo_total, cantidad_ram, memoria.level))
 
 
 #inicio Main
@@ -50,4 +55,4 @@ for i in range(cantidad_procesos):
 
 env.run()
 tiempo_promedio = tiempo_total/cantidad_procesos
-print("tiempo promedio: " + tiempo_promedio)
+print("tiempo promedio: %d" % (tiempo_promedio))
