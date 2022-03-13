@@ -34,7 +34,7 @@ def procesos(env, espera_inicio, nombre, cantidad_ram, cantidad_insutrcciones, i
     #print("Cantidad de RAM devuelta: " + cantidad_ram)
     #print("Cantidad de memoria disponible: " + memoria.level) 
 
-    print("%s proceso termiando en tiempo %d. Cantidad de RAM devuelta: %d. Cantidad de memoria disponible %d" & (nombre, env.now, cantidad_ram, ram_inicial.level))
+    print("%s proceso termiando en tiempo %d. Cantidad de RAM devuelta: %d. Cantidad de memoria disponible %d" % (nombre, env.now, cantidad_ram, ram_inicial.level))
 
 
 #inicio Main
